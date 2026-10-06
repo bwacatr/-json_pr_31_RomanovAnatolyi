@@ -65,5 +65,45 @@
         android:textAllCaps="false"
         />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Готовый продукт"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/premadeName"
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/productEnterName"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        />
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/price"
+        android:textSize="18sp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/premadePrice"/>
+
+
+
+    <TextView
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tagHint"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/premadeTags"/>
+
 
 </LinearLayout>
