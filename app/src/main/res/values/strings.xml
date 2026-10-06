@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">json_pr_31_RomanovAnatolyi</string>
+    <string name="productName">Введите название продукта</string>
+    <string name="productEnterName">Название продукта</string>
+    <string name="price">Цена (100)</string>
+    <string name="PriceText">Введите цену</string>
+    <string name="tagHint">Учебник, программирование</string>
+    <string name="TagText">Введите теги</string>
+    <string name="btnSave">Сохранить продукт</string>
+</resources>
