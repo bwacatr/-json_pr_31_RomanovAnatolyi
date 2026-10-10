@@ -7,12 +7,16 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
+import kotlin.collections.forEach
 
 
 class MainActivity : AppCompatActivity() {
     lateinit var product: EditText
     lateinit var  price: EditText
     lateinit var tag: EditText
+
+
+
 
     lateinit var premadeProductName : TextView
     lateinit var premadeProductPrice : TextView
@@ -22,12 +26,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val productObject : Product = Product("мармелад", 200.0,listOf("сладости, вкусности"))
-        val productJSON : String? = Gson().toJson(productObject)
+        val productObject : Product = Product("мармелад", 200.0,mutableListOf("сладости","вкусности"))
+        val productJSON : String = Gson().toJson(productObject)
 
         premadeProductName = findViewById(R.id.premadeName)
         premadeProductPrice = findViewById(R.id.premadePrice)
         premadeProductTags = findViewById(R.id.premadeTags)
+
+        premadeProductName.text = Gson().fromJson(productJSON, Product::class.java).name
+        premadeProductPrice.text = Gson().fromJson(productJSON, Product::class.java).price.toString()
+        val list : List<String> = Gson().fromJson(productJSON, Product::class.java).tags
+
+        var string = ""
+        list.forEach { string += "$it, " }
+
+        premadeProductTags.text = string
 
 
 
@@ -41,45 +54,59 @@ class MainActivity : AppCompatActivity() {
         var list : MutableList<String> = mutableListOf()
         var count : Int = 0
         var bucket: String = ""
-        for (i in 0..tag.length() - 1)
-        {
 
-            if  (tag.text[i] == ',')
-            {
-                list.add(bucket)
-                count++;
-                bucket = ""
-            }
-            else
-            {
-                bucket += tag.text[i]
-            }
-        }
 
-        try {
+            tag.text.split(',').forEach {
+
+                list.add(it);
+            }
+
+
+
+
+
+
             for (i in 0..price.length() - 1)
             {
                 if (price.text.toString().toDoubleOrNull() == null)
                 {
-                    throw IllegalArgumentException("В поле с ценой присутствуют символы, кроме чисел или оно пустое")
+                    val toast = Toast.makeText(this, "В поле с ценой лишние символы", Toast.LENGTH_SHORT)
+                    toast.show()
+                    return
                 }
             }
-        }
-        catch (e : Exception)
-        {
-            val toast = Toast.makeText(this, e.cause.toString(), Toast.LENGTH_SHORT)
-            toast.show()
 
+        if (tag.length() == 0)
+        {
+            val toast = Toast.makeText(this, "В поле с тегами пустое", Toast.LENGTH_SHORT)
+            toast.show()
+            return
         }
+
 
         if (product.text.isNotBlank())
         {
-        val productObject : Product = Product(product.text.toString(), price.text.toString().toDouble(),list)
-        val productJSON : String? = Gson().toJson(productObject)}
+            val productObject : Product = Product(product.text.toString(), price.text.toString().toDouble(),list)
+            val productJSON : String? = Gson().toJson(productObject)
+
+            premadeProductName.text = Gson().fromJson(productJSON, Product::class.java).name
+            premadeProductPrice.text = Gson().fromJson(productJSON, Product::class.java).price.toString()
+
+            var string = ""
+
+            list.forEach { string += "$it, " }
+
+            premadeProductTags.text = string
+        }
+
+
+
         else
         {
             val toast = Toast.makeText(this, "Введите название продукта", Toast.LENGTH_SHORT)
             toast.show()
         }
+
+
     }
 }
